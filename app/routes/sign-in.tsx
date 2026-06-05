@@ -1,4 +1,4 @@
-import Home from "../pages/home";
+import SignIn from "../pages/sign-in";
 import type { Route } from "./+types/home";
 
 export function meta({}: Route.MetaArgs) {
@@ -8,6 +8,6 @@ export function meta({}: Route.MetaArgs) {
   ];
 }
 
-export default function HomePage() {
-  return <Home />;
+export default function SignInPage() {
+  return <SignIn />;
 }

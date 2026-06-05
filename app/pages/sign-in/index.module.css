@@ -1,0 +1,6 @@
+.container-fluid {
+  height: 100vh;
+  margin: 0;
+  background: linear-gradient(to bottom, #2a271e, #111122) no-repeat;
+  background-size: cover;
+}
