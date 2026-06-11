@@ -3,6 +3,7 @@ import { Button } from "../../components/button";
 import styles from "./index.module.css";
 import { AiFillBulb } from "react-icons/ai";
 import { validateEmail } from "../../validation/validation";
+import { Input } from "../../components/input";
 
 export default function SignIn() {
   const [email, setEmail] = useState("");
@@ -14,7 +15,7 @@ export default function SignIn() {
   return (
     <>
       <div className={styles["container-fluid"]}>
-        <div className="row">
+        <div className="row m-0">
           <div className="offset-4 col-4">
             <div className={styles["loginbox"]}>
               <div className="row">
@@ -34,7 +35,7 @@ export default function SignIn() {
                   <div className={styles["form-group"]}>
                     <label htmlFor={styles["signIn"]}>Email address</label>
                     <br />
-                    <input
+                    <Input
                       className={styles["inputsignin"]}
                       type="text"
                       id="signIn"
@@ -58,11 +59,11 @@ export default function SignIn() {
                   <div className={styles["form-group"]}>
                     <label htmlFor={styles["Password"]}>Password</label>
                     <br />
-                    <input
+                    <Input
                       className={styles["inputsignin"]}
                       type="password"
                       id="password"
-                      placeholder="Enter your password "
+                      placeholder="Enter your password"
                     />
                   </div>
                 </div>
