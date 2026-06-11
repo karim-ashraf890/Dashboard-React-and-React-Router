@@ -70,13 +70,12 @@ export default function SignIn() {
               </div>
               <div className="row">
                 <div className="col-12">
-                  <button
-                    className={styles["buttonsignin"]}
+                  <Button
                     id="login"
                     type="submit"
-                  >
-                    Login
-                  </button>
+                    className={styles["buttonsignin"]}
+                    text="Login"
+                  />
                 </div>
               </div>
             </div>
