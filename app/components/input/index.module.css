@@ -1,0 +1,28 @@
+.inputGlobal {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  width: 100%;
+}
+
+.inputWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.inputGlobal {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  width: 100%;
+}
+
+.inputError {
+  border: 1px solid red;
+}
+
+.errorText {
+  color: red;
+  font-size: 12px;
+}
