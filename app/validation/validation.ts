@@ -13,11 +13,11 @@ export const validateEmail = (email: string) => {
 
 export const validatePassword = (password: string) => {
   if (!password.trim()) {
-    return "Password is required";
+    return "Must enter this field";
   }
 
-  if (password.length < 8) {
-    return "Password must be at least 8 characters";
+  if (password.length < 5) {
+    return "Password should be more than 5 length";
   }
 
   return "";

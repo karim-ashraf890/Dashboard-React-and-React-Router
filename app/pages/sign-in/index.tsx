@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Button } from "../../components/button";
 import styles from "./index.module.css";
 import { AiFillBulb } from "react-icons/ai";
-import { validateEmail } from "../../validation/validation";
+import { validateEmail, validatePassword } from "../../validation/validation";
 import { Input } from "../../components/input";
 
 export default function SignIn() {
@@ -47,10 +47,8 @@ export default function SignIn() {
                         setEmail(value);
                         setEmailError(validateEmail(value));
                       }}
+                      error={emailError}
                     />
-                    {emailError && (
-                      <p className={styles["errorText"]}>{emailError}</p>
-                    )}
                   </div>
                 </div>
               </div>
@@ -64,6 +62,13 @@ export default function SignIn() {
                       type="password"
                       id="password"
                       placeholder="Enter your password"
+                      value={password}
+                      onChange={(e) => {
+                        const value = e.target.value;
+                        setPassword(value);
+                        setPasswordError(validatePassword(value));
+                      }}
+                      error={passwordError}
                     />
                   </div>
                 </div>

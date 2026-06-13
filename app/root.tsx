@@ -2,6 +2,7 @@ import {
   isRouteErrorResponse,
   Links,
   Meta,
+  Navigate,
   Outlet,
   Scripts,
   ScrollRestoration,
@@ -11,7 +12,7 @@ import {
 import type { Route } from "./+types/root";
 import "./app.css";
 import { Button, Layout as AntLayout, Menu, theme } from "antd";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AiFillBulb } from "react-icons/ai";
 const { Header, Sider, Content } = AntLayout;
 
@@ -27,6 +28,32 @@ export function Layout({ children }: { children: React.ReactNode }) {
   const [collapsed, setCollapsed] = useState(false);
   const location = useLocation();
   const isLoginPage = location.pathname === "/sign-in";
+  const [isAuthChecked, setIsAuthChecked] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  useEffect(() => {
+    const accessToken = localStorage.getItem("accessToken");
+    const refreshToken = localStorage.getItem("refreshToken");
+
+    if (accessToken && refreshToken) {
+      setIsLoggedIn(true);
+    } else {
+      setIsLoggedIn(false);
+    }
+
+    setIsAuthChecked(true);
+  }, []);
+  if (!isAuthChecked) {
+    return null; // أو loading
+  }
+
+  if (!isLoginPage && !isLoggedIn) {
+    return <Navigate to="/sign-in" replace />;
+  }
+
+  if (isLoginPage && isLoggedIn) {
+    return <Navigate to="/" replace />;
+  }
+
   return (
     <html lang="en">
       <head>

@@ -1,6 +1,5 @@
 import type { ChangeEvent } from "react";
 import { Input as AntInput } from "antd";
-import { EyeInvisibleOutlined, EyeTwoTone } from "@ant-design/icons";
 import styles from "./index.module.css";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 
@@ -23,19 +22,21 @@ export function Input({
   onChange,
   error,
 }: InputProps) {
-  const inputClass = `${styles.inputGlobal} ${className} ${
-    error ? styles.inputError : ""
-  }`;
+  const inputClass = `${styles.inputGlobal} ${className}`;
 
   return (
-    <div className={styles.inputWrapper}>
+    <div
+      className={`${styles.inputWrapper} ${
+        error ? styles.inputWrapperError : ""
+      } ${inputClass} `}
+    >
       {type === "password" ? (
         <AntInput.Password
           id={id}
           placeholder={placeholder}
           value={value}
           onChange={onChange}
-          className={inputClass}
+          //   className={inputClass}
           iconRender={(visible) => (visible ? <FaEye /> : <FaEyeSlash />)}
         />
       ) : (
@@ -45,7 +46,7 @@ export function Input({
           placeholder={placeholder}
           value={value}
           onChange={onChange}
-          className={inputClass}
+          //   className={inputClass}
         />
       )}
 
