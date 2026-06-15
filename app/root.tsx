@@ -2,7 +2,6 @@ import {
   isRouteErrorResponse,
   Links,
   Meta,
-  Navigate,
   Outlet,
   Scripts,
   ScrollRestoration,
@@ -11,9 +10,24 @@ import {
 
 import type { Route } from "./+types/root";
 import "./app.css";
+import styles from "./global.module.css";
 import { Button, Layout as AntLayout, Menu, theme } from "antd";
-import { useEffect, useState } from "react";
-import { AiFillBulb } from "react-icons/ai";
+import { useState } from "react";
+import {
+  AiOutlineAppstore,
+  AiOutlineFile,
+  AiOutlineMenuFold,
+  AiOutlineMenuUnfold,
+} from "react-icons/ai";
+import { MdOutlineSpaceDashboard } from "react-icons/md";
+import { GrGroup, GrUserAdmin } from "react-icons/gr";
+import { RiOrganizationChart } from "react-icons/ri";
+import { RxUpdate } from "react-icons/rx";
+import { BiCategory, BiSolidShoppingBags } from "react-icons/bi";
+import { GoLightBulb } from "react-icons/go";
+import { BsChatDots } from "react-icons/bs";
+import { FiLogOut } from "react-icons/fi";
+
 const { Header, Sider, Content } = AntLayout;
 
 export const links: Route.LinksFunction = () => [
@@ -28,32 +42,6 @@ export function Layout({ children }: { children: React.ReactNode }) {
   const [collapsed, setCollapsed] = useState(false);
   const location = useLocation();
   const isLoginPage = location.pathname === "/sign-in";
-  const [isAuthChecked, setIsAuthChecked] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  useEffect(() => {
-    const accessToken = localStorage.getItem("accessToken");
-    const refreshToken = localStorage.getItem("refreshToken");
-
-    if (accessToken && refreshToken) {
-      setIsLoggedIn(true);
-    } else {
-      setIsLoggedIn(false);
-    }
-
-    setIsAuthChecked(true);
-  }, []);
-  if (!isAuthChecked) {
-    return null; // أو loading
-  }
-
-  if (!isLoginPage && !isLoggedIn) {
-    return <Navigate to="/sign-in" replace />;
-  }
-
-  if (isLoginPage && isLoggedIn) {
-    return <Navigate to="/" replace />;
-  }
-
   return (
     <html lang="en">
       <head>
@@ -63,7 +51,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Links />
       </head>
       <body>
-        <AntLayout>
+        <AntLayout style={{ minHeight: "100vh" }}>
           {!isLoginPage && (
             <Sider trigger={null} collapsible collapsed={collapsed}>
               <div className="demo-logo-vertical" />
@@ -74,34 +62,118 @@ export function Layout({ children }: { children: React.ReactNode }) {
                 items={[
                   {
                     key: "1",
-                    icon: <AiFillBulb size={40} color="gold" />,
-                    label: "nav 1",
+                    icon: (
+                      <img
+                        src="/app/images/avatar_holder_dashboard.gif"
+                        alt="menu"
+                        // style={{ width: 33, height: 33 }}
+                        className={styles["avatar-img"]}
+                      />
+                    ),
+                    label: "Ash Hassan",
                   },
                   {
                     key: "2",
-                    icon: <AiFillBulb size={40} color="gold" />,
-                    label: "nav 2",
+                    icon: <MdOutlineSpaceDashboard />,
+                    label: "Dashboard",
                   },
                   {
                     key: "3",
-                    icon: <AiFillBulb size={40} color="gold" />,
-                    label: "nav 3",
+                    icon: <GrUserAdmin />,
+                    label: "Admins",
                   },
+                  {
+                    key: "4",
+                    icon: <GrGroup />,
+                    label: "Trainees",
+                  },
+                  {
+                    key: "5",
+                    icon: <RiOrganizationChart />,
+                    label: "Organizations",
+                  },
+                  {
+                    key: "6",
+                    icon: <RxUpdate />,
+                    label: "Update Requests",
+                  },
+                  {
+                    key: "7",
+                    icon: <BiCategory />,
+                    label: "Categories",
+                  },
+                  {
+                    key: "8",
+                    icon: <AiOutlineAppstore />,
+                    label: "Sub categories",
+                  },
+                  {
+                    key: "9",
+                    icon: <GoLightBulb />,
+                    label: "Courses",
+                  },
+                  {
+                    key: "10",
+                    icon: <BiSolidShoppingBags />,
+                    label: "Bags",
+                  },
+                  {
+                    key: "11",
+                    icon: <BsChatDots />,
+                    label: "Consultation Requests",
+                  },
+                  {
+                    key: "12",
+                    icon: <AiOutlineFile />,
+                    label: "Pages",
+                    children: [
+                      {
+                        key: "12-1",
+                        label: "Home Page",
+                      },
+                      {
+                        key: "12-2",
+                        label: "About Us",
+                      },
+                      {
+                        key: "12-3",
+                        label: "Contact",
+                      },
+                      {
+                        key: "12-4",
+                        label: "Home Page",
+                      },
+                      {
+                        key: "12-5",
+                        label: "About Us",
+                      },
+                      {
+                        key: "12-6",
+                        label: "Contact",
+                      },
+                    ],
+                  },
+                  // {
+                  //   key: "13",
+                  //   icon: <FiLogOut />,
+                  //   label: "Logout",
+                  //   className: "logout-item",
+                  // },
                 ]}
               />
+              <div className="logout-container">
+                <FiLogOut />
+                <span>Logout</span>
+              </div>
             </Sider>
           )}
           <AntLayout>
             {!isLoginPage && (
-              <Header style={{ padding: 0, background: "red" }}>
+              <Header style={{ padding: 0 }}>
                 <Button
                   type="text"
                   icon={
-                    collapsed ? (
-                      <AiFillBulb size={40} color="gold" />
-                    ) : (
-                      <AiFillBulb size={40} color="gold" />
-                    )
+                    collapsed ? <AiOutlineMenuUnfold /> : <AiOutlineMenuFold />
                   }
                   onClick={() => setCollapsed(!collapsed)}
                   style={{
@@ -117,11 +189,8 @@ export function Layout({ children }: { children: React.ReactNode }) {
                 isLoginPage
                   ? {}
                   : {
-                      margin: "24px 16px",
                       padding: 24,
                       minHeight: 280,
-                      background: "yellow",
-                      borderRadius: "blue",
                     }
               }
             >

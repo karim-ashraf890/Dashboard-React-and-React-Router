@@ -65,3 +65,7 @@ label {
 .buttonsignin:hover {
   background-color: rgb(199, 199, 199);
 }
+.errorText {
+  color: red;
+  text-align: center;
+}

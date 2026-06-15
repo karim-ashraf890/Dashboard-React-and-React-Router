@@ -4,6 +4,8 @@ import styles from "./index.module.css";
 import { AiFillBulb } from "react-icons/ai";
 import { validateEmail, validatePassword } from "../../validation/validation";
 import { Input } from "../../components/input";
+import { signIn } from "../../apis/auth.api";
+import { useNavigate } from "react-router";
 
 export default function SignIn() {
   const [email, setEmail] = useState("");
@@ -11,6 +13,31 @@ export default function SignIn() {
 
   const [password, setPassword] = useState("");
   const [passwordError, setPasswordError] = useState("");
+  const navigate = useNavigate();
+
+  const handleLogin = () => {
+    signIn({
+      email: email,
+      password: password,
+    })
+      .then((response) => {
+        console.log("LOGIN SUCCESS");
+        navigate("/");
+      })
+      .catch((error) => {
+        console.log("LOGIN ERROR");
+
+        if (error.response?.data?.error?.message) {
+          setApiError(error.response.data.error.message);
+        } else {
+          setApiError("Something went wrong");
+        }
+      });
+  };
+  const [apiError, setApiError] = useState("");
+
+  const isFormValid =
+    email.length > 0 && password.length > 0 && !emailError && !passwordError;
 
   return (
     <>
@@ -27,7 +54,9 @@ export default function SignIn() {
               </div>
               <div className="row">
                 <div className="col-12 d-flex justify-content-center">
-                  <div id="errorContainer"></div>
+                  {apiError && (
+                    <div className={styles.errorText}>{apiError}</div>
+                  )}
                 </div>
               </div>
               <div className="row mb-4">
@@ -43,7 +72,6 @@ export default function SignIn() {
                       value={email}
                       onChange={(e) => {
                         const value = e.target.value;
-
                         setEmail(value);
                         setEmailError(validateEmail(value));
                       }}
@@ -80,6 +108,8 @@ export default function SignIn() {
                     type="submit"
                     className={styles["buttonsignin"]}
                     text="Login"
+                    onClick={handleLogin}
+                    disabled={!isFormValid}
                   />
                 </div>
               </div>

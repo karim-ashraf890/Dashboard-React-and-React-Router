@@ -6,6 +6,8 @@ type ButtonProps = {
   text: string;
   type?: "button" | "submit" | "reset";
   className?: string;
+  onClick?: () => void;
+  disabled?: boolean;
 };
 
 export function Button({
@@ -13,12 +15,16 @@ export function Button({
   text,
   type = "button",
   className = "",
+  onClick,
+  disabled,
 }: ButtonProps) {
   return (
     <AntButton
       id={id}
       htmlType={type} // مهم في antd بدل type
       className={`${styles.buttonGlobal} ${className}`}
+      onClick={onClick}
+      disabled={disabled}
     >
       {text}
     </AntButton>
