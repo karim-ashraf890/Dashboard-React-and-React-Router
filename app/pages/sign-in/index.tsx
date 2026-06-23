@@ -14,13 +14,18 @@ export default function SignIn() {
   const [password, setPassword] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const navigate = useNavigate();
-
   const handleLogin = () => {
     signIn({
-      email: email,
-      password: password,
+      email,
+      password,
     })
       .then((response) => {
+        const accessToken = response.data.access_token.replace("Bearer ", "");
+        const refreshToken = response.data.refresh_token.replace("Bearer ", "");
+
+        localStorage.setItem("accessToken", accessToken);
+        localStorage.setItem("refreshToken", refreshToken);
+
         console.log("LOGIN SUCCESS");
         navigate("/");
       })
