@@ -44,6 +44,24 @@ export const links: Route.LinksFunction = () => [
   },
 ];
 
+// Map menu keys to routes
+const menuRoutes: Record<string, string> = {
+  "1": "/my-profile",
+  "2": "/",
+  "3": "/admins",
+  "4": "/trainees",
+  "5": "/organizations",
+  "6": "/update-requests",
+  "7": "/categories",
+  "8": "/sub-categories",
+  "9": "/courses",
+  "10": "/bags",
+  "11": "/consultation-requests",
+  "12-1": "/pages/home",
+  "12-2": "/pages/about",
+  "12-3": "/pages/contact",
+};
+
 export function Layout({ children }: { children: React.ReactNode }) {
   const [collapsed, setCollapsed] = useState(false);
   const location = useLocation();
@@ -57,6 +75,19 @@ export function Layout({ children }: { children: React.ReactNode }) {
     navigate("/sign-in");
   };
 
+  const handleMenuClick = (e: any) => {
+    const route = menuRoutes[e.key];
+    if (route) {
+      navigate(route);
+    }
+  };
+  const getSelectedKey = (): string => {
+    return (
+      Object.entries(menuRoutes).find(
+        ([, path]) => path === location.pathname,
+      )?.[0] ?? "2"
+    );
+  };
   return (
     <html lang="en">
       <head>
@@ -75,7 +106,8 @@ export function Layout({ children }: { children: React.ReactNode }) {
               <Menu
                 theme="dark"
                 mode="inline"
-                defaultSelectedKeys={["1"]}
+                selectedKeys={[getSelectedKey()]}
+                onClick={handleMenuClick}
                 items={[
                   {
                     key: "1",
@@ -87,6 +119,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
                       />
                     ),
                     label: "Ash Hassan",
+                    // disabled: true,
                   },
                   {
                     key: "2",
@@ -122,9 +155,6 @@ export function Layout({ children }: { children: React.ReactNode }) {
                       { key: "12-1", label: "Home Page" },
                       { key: "12-2", label: "About Us" },
                       { key: "12-3", label: "Contact" },
-                      { key: "12-4", label: "Home Page" },
-                      { key: "12-5", label: "About Us" },
-                      { key: "12-6", label: "Contact" },
                     ],
                   },
                 ]}
